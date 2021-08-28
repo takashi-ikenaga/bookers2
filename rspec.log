@@ -1,4 +1,14 @@
 
+BookCommentモデルのテスト
+  バリデーションのテスト
+    commentカラム
+[32m      空欄でないこと[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[32m      N:1となっている[0m
+    Userモデルとの関係
+[32m      N:1となっている[0m
+
 Bookモデルのテスト
   バリデーションのテスト
     titleカラム
@@ -8,6 +18,19 @@ Bookモデルのテスト
 [32m      200文字以下であること: 200文字は〇[0m
 [32m      200文字以下であること: 201文字は×[0m
   アソシエーションのテスト
+    Userモデルとの関係
+[32m      N:1となっている[0m
+    BookCommentモデルとの関係
+[32m      1:Nとなっている[0m
+    Favoriteモデルとの関係
+[32m      1:Nとなっている[0m
+
+Favoriteモデルのテスト
+  バリデーションのテスト
+[31m    ユーザーは一つの投稿に一つしかいいねできない (FAILED - 1)[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[32m      N:1となっている[0m
     Userモデルとの関係
 [32m      N:1となっている[0m
 
@@ -25,6 +48,10 @@ Userモデルのテスト
 [32m      50文字以下であること: 51文字は×[0m
   アソシエーションのテスト
     Bookモデルとの関係
+[32m      1:Nとなっている[0m
+    BookCommentモデルとの関係
+[32m      1:Nとなっている[0m
+    Favoriteモデルとの関係
 [32m      1:Nとなっている[0m
 
 [STEP1] ユーザログイン前のテスト
@@ -60,15 +87,15 @@ Userモデルのテスト
 [32m      password_confirmationフォームが表示される[0m
 [32m      Sign upボタンが表示される[0m
     新規登録成功のテスト
-[31m      正しく新規登録される (FAILED - 1)[0m
-[31m      新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている (FAILED - 2)[0m
+[32m      正しく新規登録される[0m
+[32m      新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている[0m
   ユーザログイン
     表示内容の確認
 [32m      URLが正しい[0m
 [32m      「Log in」と表示される[0m
 [32m      nameフォームが表示される[0m
 [32m      passwordフォームが表示される[0m
-[32m      Log inボタンが表示される[0m
+[32m      Sign upボタンが表示される[0m
 [32m      emailフォームは表示されない[0m
     ログイン成功のテスト
 [32m      ログイン後のリダイレクト先が、ログインしたユーザの詳細画面になっている[0m
@@ -193,16 +220,16 @@ Userモデルのテスト
 
 [STEP3] 仕上げのテスト
   サクセスメッセージのテスト
-[31m    ユーザ新規登録成功時 (FAILED - 3)[0m
+[32m    ユーザ新規登録成功時[0m
 [32m    ユーザログイン成功時[0m
 [32m    ユーザログアウト成功時[0m
 [32m    ユーザのプロフィール情報更新成功時[0m
-[31m    投稿データの新規投稿成功時: 投稿一覧画面から行います。 (FAILED - 4)[0m
+[32m    投稿データの新規投稿成功時: 投稿一覧画面から行います。[0m
 [32m    投稿データの更新成功時[0m
   処理失敗時のテスト
     ユーザ新規登録失敗: nameを1文字にする
 [32m      新規登録されない[0m
-[31m      新規登録画面を表示しており、フォームの内容が正しい (FAILED - 5)[0m
+[32m      新規登録画面を表示しており、フォームの内容が正しい[0m
 [32m      バリデーションエラーが表示される[0m
     ユーザのプロフィール情報編集失敗: nameを1文字にする
 [32m      更新されない[0m
@@ -281,43 +308,135 @@ Userモデルのテスト
 [32m      投稿一覧画面でレンチアイコンが表示される[0m
 [32m      投稿詳細画面でレンチアイコンが表示される[0m
 
+[STEP4] いいねとコメントのテスト
+  投稿一覧画面のテスト[課題4追加分]
+    表示の確認
+[32m      いいねボタンのハートアイコンが表示される[0m
+[32m      いいねボタンが表示される[0m
+[32m      コメント数が表示される[0m
+    いいね作成機能のテスト
+[32m      自分のいいねが正しく保存される[0m
+[32m      リダイレクト先が投稿一覧画面になっている[0m
+[32m      リダイレクト先でいいね数が正しく更新されている[0m
+    いいね削除機能のテスト
+[32m      自分のいいねが正しく削除される[0m
+[32m      リダイレクト先が投稿一覧画面になっている[0m
+[32m      リダイレクト先でいいね数が正しく更新されている[0m
+  自分の投稿詳細画面のテスト[課題4追加分]
+    表示の確認
+[32m      いいねボタンのハートアイコンが表示される[0m
+[32m      いいねボタンが表示される[0m
+[32m      コメント数が表示される[0m
+[32m      コメント一覧でコメント投稿者の画像が表示される: fallbackの画像がサイドバーの1つ＋Book detail直下の1つ＋コメント一覧(2人)の2つの計4つ存在する[0m
+[32m      コメント一覧でコメント投稿者の名前が表示される[0m
+[32m      コメント一覧でコメントの内容が表示される[0m
+[32m      自分が投稿したコメントの削除ボタンが表示される[0m
+[32m      他人が投稿したコメントの削除ボタンは表示されない[0m
+[32m      コメント投稿フォームが表示される[0m
+[32m      送信ボタンが表示される[0m
+    いいね機能のテスト
+[32m      自分のいいねが正しく保存される[0m
+[32m      リダイレクト先が、いいねをした投稿詳細画面になっている[0m
+[32m      リダイレクト先でいいね数が正しく更新されている[0m
+    コメント追加機能のテスト
+[32m      自分のコメントが正しく保存される[0m
+[32m      リダイレクト先が、コメントをした投稿詳細画面になっている[0m
+[32m      リダイレクト先でコメント数が正しく更新されている[0m
+[32m      リダイレクト先で新しいコメントが表示されている[0m
+    コメント削除機能のテスト
+[32m      自分のコメントが正しく削除される[0m
+[32m      リダイレクト先が、コメントをしていた投稿詳細画面になっている[0m
+[32m      リダイレクト先でコメント数が正しく更新されている[0m
+[32m      リダイレクト先で削除したコメントは表示されない[0m
+  自分のユーザ詳細画面のテスト[課題4追加分]
+    表示の確認
+[31m      いいねボタンのハートアイコンが表示される (FAILED - 2)[0m
+[31m      いいねボタンが表示される (FAILED - 3)[0m
+[32m      コメント数が表示される[0m
+    いいね作成機能のテスト
+[31m      自分のいいねが正しく保存される (FAILED - 4)[0m
+[31m      リダイレクト先が自分のユーザ詳細画面になっている (FAILED - 5)[0m
+[31m      リダイレクト先でいいね数が正しく更新されている (FAILED - 6)[0m
+
 Failures:
 
-  1) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される
-     [31mFailure/Error: expect { click_button 'Sign up' }.to change(User.all, :count).by(1)[0m
-     [31m  expected `User::ActiveRecord_Relation#count` to have changed by 1, but was changed by 0[0m
-     [36m# ./spec/system/01_before_login_spec.rb:140:in `block (4 levels) in <main>'[0m
-
-  2) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている
-     [31mFailure/Error: expect(current_path).to eq '/users/' + User.last.id.to_s[0m
+  1) Favoriteモデルのテスト バリデーションのテスト ユーザーは一つの投稿に一つしかいいねできない
+     [31mFailure/Error: is_expected.to eq false[0m
      [31m[0m
-     [31mNoMethodError:[0m
-     [31m  undefined method `id' for nil:NilClass[0m
-     [36m# ./spec/system/01_before_login_spec.rb:144:in `block (4 levels) in <main>'[0m
+     [31m  expected: false[0m
+     [31m       got: true[0m
+     [31m[0m
+     [31m  (compared using ==)[0m
+     [31m[0m
+     [31m  Diff:[0m[0m
+     [31m  [0m[34m@@ -1 +1 @@[0m
+     [31m  [0m[31m-false[0m
+     [31m  [0m[32m+true[0m
+     [31m  [0m[0m
+     [36m# ./spec/models/favorite_spec.rb:13:in `block (3 levels) in <main>'[0m
 
-  3) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時
-     [31mFailure/Error: is_expected.to have_content 'successfully'[0m
-     [31m  expected to find text "successfully" in "Bookers\nHome About sign up login\nSign up\n1 error prohibited this user from being saved:\nEmail can't be blank\nName\nEmail\nPassword (6 characters minimum)\nPassword confirmation\nLog in\nCopyRight Infratop.inc"[0m
-     [36m# ./spec/system/03_finishing_touches_spec.rb:19:in `block (3 levels) in <main>'[0m
+  2) [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] 表示の確認 いいねボタンのハートアイコンが表示される
+     [31mFailure/Error: expect(page).to have_selector('.fa-heart')[0m
+     [31m  expected to find css ".fa-heart" but there were no matches[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:166:in `block (4 levels) in <main>'[0m
 
-  4) [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの新規投稿成功時: 投稿一覧画面から行います。
-     [31mFailure/Error: is_expected.to have_content 'successfully'[0m
-     [31m  expected to find text "successfully" in "Bookers\nHome Users Books logout\nUser info\nname z947zy01z0 introduction eqmrn4f6yvkftz8h6grh\nNew book\nTitle\nOpinion\nBook detail\nz947zy01z0 7nuf0 agfcg94qcpt33je2pkg9 Edit Destroy\nCopyRight Infratop.inc"[0m
-     [36m# ./spec/system/03_finishing_touches_spec.rb:56:in `block (3 levels) in <main>'[0m
+  3) [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] 表示の確認 いいねボタンが表示される
+     [31mFailure/Error: expect(page).to have_link '', href: book_favorites_path(book)[0m
+     [31m  expected to find link "" with href "/books/1/favorites" but there were no matches[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:169:in `block (4 levels) in <main>'[0m
 
-  5) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい
-     [31mFailure/Error: expect(page).to have_field 'user[email]', with: @email[0m
-     [31m  expected to find visible field "user[email]" that is not disabled with value "atonette@runolfsson-roberts.info" but there were no matches. Also found "", which matched the selector but not all filters. Expected value to be "atonette@runolfsson-roberts.info" but was ""[0m
-     [36m# ./spec/system/03_finishing_touches_spec.rb:88:in `block (4 levels) in <main>'[0m
+  4) [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト 自分のいいねが正しく保存される
+     [31mFailure/Error: expect { click_link '', href: book_favorites_path(book) }.to change(user.favorites, :count).by(1)[0m
+     [31m[0m
+     [31mCapybara::ElementNotFound:[0m
+     [31m  Unable to find link "" with href "/books/1/favorites"[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:303:in `block in synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/base.rb:83:in `synchronize'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:292:in `synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:53:in `find'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/actions.rb:42:in `click_link'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/session.rb:768:in `block (2 levels) in <class:Session>'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/dsl.rb:58:in `block (2 levels) in <module:DSL>'[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:177:in `block (5 levels) in <main>'[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:177:in `block (4 levels) in <main>'[0m
 
-Finished in 16.45 seconds (files took 1.34 seconds to load)
-[31m197 examples, 5 failures[0m
+  5) [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト リダイレクト先が自分のユーザ詳細画面になっている
+     [31mFailure/Error: click_link '', href: book_favorites_path(book)[0m
+     [31m[0m
+     [31mCapybara::ElementNotFound:[0m
+     [31m  Unable to find link "" with href "/books/1/favorites"[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:303:in `block in synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/base.rb:83:in `synchronize'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:292:in `synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:53:in `find'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/actions.rb:42:in `click_link'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/session.rb:768:in `block (2 levels) in <class:Session>'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/dsl.rb:58:in `block (2 levels) in <module:DSL>'[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:180:in `block (4 levels) in <main>'[0m
+
+  6) [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト リダイレクト先でいいね数が正しく更新されている
+     [31mFailure/Error: click_link '', href: book_favorites_path(book)[0m
+     [31m[0m
+     [31mCapybara::ElementNotFound:[0m
+     [31m  Unable to find link "" with href "/books/1/favorites"[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:303:in `block in synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/base.rb:83:in `synchronize'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:292:in `synced_resolve'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/finders.rb:53:in `find'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/node/actions.rb:42:in `click_link'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/session.rb:768:in `block (2 levels) in <class:Session>'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.35.3/lib/capybara/dsl.rb:58:in `block (2 levels) in <module:DSL>'[0m
+     [36m# ./spec/system/04_favorite_comment_spec.rb:184:in `block (4 levels) in <main>'[0m
+
+Finished in 22.47 seconds (files took 1.38 seconds to load)
+[31m243 examples, 6 failures[0m
 
 Failed examples:
 
-[31mrspec ./spec/system/01_before_login_spec.rb:139[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される[0m
-[31mrspec ./spec/system/01_before_login_spec.rb:142[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている[0m
-[31mrspec ./spec/system/03_finishing_touches_spec.rb:12[0m [36m# [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時[0m
-[31mrspec ./spec/system/03_finishing_touches_spec.rb:47[0m [36m# [STEP3] 仕上げのテスト サクセスメッセージのテスト 投稿データの新規投稿成功時: 投稿一覧画面から行います。[0m
-[31mrspec ./spec/system/03_finishing_touches_spec.rb:84[0m [36m# [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい[0m
+[31mrspec ./spec/models/favorite_spec.rb:12[0m [36m# Favoriteモデルのテスト バリデーションのテスト ユーザーは一つの投稿に一つしかいいねできない[0m
+[31mrspec ./spec/system/04_favorite_comment_spec.rb:165[0m [36m# [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] 表示の確認 いいねボタンのハートアイコンが表示される[0m
+[31mrspec ./spec/system/04_favorite_comment_spec.rb:168[0m [36m# [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] 表示の確認 いいねボタンが表示される[0m
+[31mrspec ./spec/system/04_favorite_comment_spec.rb:176[0m [36m# [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト 自分のいいねが正しく保存される[0m
+[31mrspec ./spec/system/04_favorite_comment_spec.rb:179[0m [36m# [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト リダイレクト先が自分のユーザ詳細画面になっている[0m
+[31mrspec ./spec/system/04_favorite_comment_spec.rb:183[0m [36m# [STEP4] いいねとコメントのテスト 自分のユーザ詳細画面のテスト[課題4追加分] いいね作成機能のテスト リダイレクト先でいいね数が正しく更新されている[0m
 
